@@ -14,8 +14,10 @@
 // Confirm the link is a sign-in with email link.
         console.log(window.location.href)
     const email = urlParams.get('email');
-if(!email){
-    console.log("no email")
+        const walletAddress = urlParams.get('walletAddress');
+
+if(!email || !walletAddress){
+    console.log("no email or wallet")
 }
     else{
 fetch("https://europe-west4-arnacon-production-gcp.cloudfunctions.net/authenticate-email", {
@@ -26,7 +28,8 @@ fetch("https://europe-west4-arnacon-production-gcp.cloudfunctions.net/authentica
     body: JSON.stringify({
         // Include any data you want to send in the body here
         email: email, // Example data
-        url: window.location.href
+        url: window.location.href,
+        walletAddress:walletAddress
     })
 })
 .then(response => response.json())
