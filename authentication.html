@@ -9,10 +9,15 @@
     
 </body>
 <script type="module">
-    
+        const urlParams = new URLSearchParams(window.location.search);
+
 // Confirm the link is a sign-in with email link.
         console.log(window.location.href)
-
+    const email = urlParams.get('email');
+if(!email){
+    console.log("no email")
+}
+    else{
 fetch("https://europe-west4-arnacon-production-gcp.cloudfunctions.net/authenticate-email", {
     method: "POST",
     headers: {
@@ -20,13 +25,13 @@ fetch("https://europe-west4-arnacon-production-gcp.cloudfunctions.net/authentica
     },
     body: JSON.stringify({
         // Include any data you want to send in the body here
-        email: "user@example.com", // Example data
+        email: email, // Example data
         url: window.location.href
     })
 })
 .then(response => response.json())
 .then(data => console.log(data))
 .catch(error => console.error('Error:', error));
-
+    }
 </script>
 </html>
