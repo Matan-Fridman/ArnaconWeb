@@ -63,7 +63,12 @@ fetch("https://europe-west4-arnacon-production-gcp.cloudfunctions.net/authentica
     })
 })
 .then(response => response.json())
-.then(data => console.log(data))
+.then((data) => {
+    console.log(data)
+     document.querySelector(".loader").style.display = "none"
+    document.querySelector(".message").textContent = "Successfully sent product!"
+
+                })
 .catch(error => console.error('Error:', error));
     }
 </script>
