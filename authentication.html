@@ -9,47 +9,24 @@
     
 </body>
 <script type="module">
-    import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js'
     
 // Confirm the link is a sign-in with email link.
-const auth = getAuth();
         console.log(window.location.href)
 
-if (isSignInWithEmailLink(auth, window.location.href)) {
-    console.log("here")
-  // Additional state parameters can also be passed via URL.
-  // This can be used to continue the user's intended action before triggering
-  // the sign-in operation.
-  // Get the email if available. This should be available if the user completes
-  // the flow on the same device where they started it.
-  let email = window.localStorage.getItem('emailForSignIn');
-  if (!email) {
-    // User opened the link on a different device. To prevent session fixation
-    // attacks, ask the user to provide the associated email again. For example:
-    email = window.prompt('Please provide your email for confirmation');
-  }
-        console.log("verifying...")
-
-  // The client SDK will parse the code from the link for you.
-  signInWithEmailLink(auth, email, window.location.href)
-    .then((result) => {
-            console.log("result: ", result)
-
-      // Clear email from storage.
-      window.localStorage.removeItem('emailForSignIn');
-      // You can access the new user by importing getAdditionalUserInfo
-      // and calling it with result:
-      // getAdditionalUserInfo(result)
-      // You can access the user's profile via:
-      // getAdditionalUserInfo(result)?.profile
-      // You can check if the user is new or existing:
-      // getAdditionalUserInfo(result)?.isNewUser
+fetch("https://europe-west4-arnacon-production-gcp.cloudfunctions.net/authenticate-email", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+        // Include any data you want to send in the body here
+        email: "user@example.com", // Example data
+        url: window.location.href
     })
-    .catch((error) => {
-      // Some error occurred, you can inspect the code: error.code
-      // Common errors could be invalid email and invalid or expired OTPs.
-    });
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
 }
 </script>
 </html>
