@@ -59,17 +59,23 @@ fetch("https://europe-west4-arnacon-production-gcp.cloudfunctions.net/authentica
         // Include any data you want to send in the body here
         email: email, // Example data
         url: window.location.href,
-        walletAddress:walletAddress
+        walletAddress: walletAddress
     })
 })
-.then(response => response.json())
-.then((data) => {
-    console.log(data)
-     document.querySelector(".loader").style.display = "none"
-    document.querySelector(".message").textContent = "Successfully sent product!"
-
-                })
-.catch(error => console.error('Error:', error));
+.then(response => {
+    // Check if the response is JSON
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+        return response.json();
+    } else {
+        return response.text(); // Handle as plain text
     }
+})
+.then((data) => {
+    console.log(data);
+    document.querySelector(".loader").style.display = "none";
+    document.querySelector(".message").textContent = "Successfully sent product!";
+})
+.catch(error => console.error('Error:', error));}
 </script>
 </html>
