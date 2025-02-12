@@ -35,8 +35,8 @@
     </style>
 </head>
 <body>
-    <div class="message" id="message">Verifying Email and sending product...</div>
-    <div class="loader"></div>
+    <div class="message" id="message">Thank you for approving your e-mail address. We shall install the product on Arnacon within a minute.</div>
+<!--     <div class="loader"></div> -->
 </body>
 <script type="module">
         const urlParams = new URLSearchParams(window.location.search);
@@ -73,8 +73,8 @@ fetch("https://europe-west4-arnacon-production-gcp.cloudfunctions.net/authentica
 })
 .then((data) => {
     console.log(data);
-    document.querySelector(".loader").style.display = "none";
-    document.querySelector(".message").textContent = "Successfully sent product!";
+    // document.querySelector(".loader").style.display = "none";
+    document.querySelector(".message").textContent = "The product is now installed on Arnacon. Good luck!";
 })
 .catch(error => console.error('Error:', error));}
 </script>
