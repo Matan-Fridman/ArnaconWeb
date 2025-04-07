@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat View</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    #chat {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .message {
+      background-color: #ffffff;
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+
+    .chat-image {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+  <div id="chat"></div>
+
+  <script>
+    window.displayImage = function(messageId, imageUrl) {
+      const container = document.getElementById("chat");
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "message";
+
+      const img = document.createElement("img");
+      img.className = "chat-image";
+      img.src = imageUrl;
+      img.alt = "Image message";
+
+      wrapper.appendChild(img);
+      container.appendChild(wrapper);
+
+      // Optional: Scroll to bottom
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    // For testing
+    setTimeout(() => {
+      displayImage("test1", "https://placekitten.com/400/300");
+    }, 500);
+  </script>
+</body>
+</html>
